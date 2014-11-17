@@ -17,7 +17,7 @@ local team_flag_loc = {
 
 local World_flag_loc = {
 		[1] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- central flag location temp Shattrath
-			};
+			}; -- add more key locations so the world flag will jump around the world randomly.
 
 local World_CTF = {
 		alliance = 0,
