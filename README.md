@@ -13,5 +13,5 @@ you goal is to get your team's flag to the world flag to capture the world flag.
 the `CTF_timer` is the adjustable timer value for duration between World flag re-spawn's.
 
 easy to add new world flag locations.
-just find a random spot and add the gps coordinates (map, x, y, z, o)to the `world_flag_loc` table then restart core.
-the world flag can be placed at any location now, the script will compensate for zone/map changes when flag bearrer teleports.
+ * just find a random spot and add the gps coordinates (map, x, y, z, o)to the `world_flag_loc` table then restart core.
+ * the world flag can be placed at any location now, the script will compensate for zone/map changes when flag bearrer teleports.
