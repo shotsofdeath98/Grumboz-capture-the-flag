@@ -8,7 +8,7 @@ there are 2 kinds of flags. team flags(ally , horde) and world flags(starter, al
 
 you goal is to get your team's flag to the world flag to capture the world flag.
 the world flag will change based on what team captures the world flag.
-the world flag will respawn ata random location from the `World_flag_loc` table for another round based on the `CTF_timer` setting.
+the world flag will respawn at a random location from the `World_flag_loc` table for another round based on the `CTF_timer` setting.
 
 the `CTF_timer` is the adjustable timer value for duration between rounds.
 
