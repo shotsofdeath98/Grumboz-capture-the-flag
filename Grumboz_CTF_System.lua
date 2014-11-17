@@ -11,13 +11,13 @@ print("* Capture The Flag System Loading *")
 local flag_id = 600000
 
 local team_flag_loc = {
-		[1] = {flag_id, map, x, y, z, o}, -- ally flag location
-		[2] = {flag_id+1, map, x, y, z, o}, -- horde flag location
-			};
+			[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
+			[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
+						};
 
 local World_flag_loc = {
-		[1] = {map, x, y, z, o}, -- central flag location
-			};
+			[1] = {1, 1334.818359, -4380.359375, 26.207428, 0.261494}, -- central flag location
+						};
 
 local World_CTF = {
 		alliance = 0,
@@ -33,10 +33,10 @@ end
 local function Spawn_Team_Flags(team)
 
 local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team])
-	
+
 PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
 
-end
+end	
 
 Spawn_Team_Flags(1)
 Spawn_Team_Flags(2)
@@ -47,7 +47,7 @@ local function Spawn_World_Flag(team)
 
 local map, x, y, z, o = table.unpack(World_flag_loc[1])
 local flag = (flag_id + 1)+team
-	
+
 PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
 
 end
@@ -84,6 +84,8 @@ local function Tag_World_Flag(event, player, go)
 		Spawn_World_Flag(player:GetTeam()+1)
 		player:RemoveAura(23333)
 		player:RemoveAura(23335)
+		Spawn_Team_Flags(1)
+		Spawn_Team_Flags(2)
 	else
 	end
 end
@@ -92,6 +94,16 @@ RegisterGameObjectGossipEvent(flag_id+2, 1, Tag_World_Flag)
 RegisterGameObjectGossipEvent(flag_id+3, 1, Tag_World_Flag)
 RegisterGameObjectGossipEvent(flag_id+4, 1, Tag_World_Flag)
 
+local function Player_Change_Zone(event, player, newZone, newArea)
+
+	if((player:GetGUIDLow() == World_CTF.alliance)or(player:GetGUIDLow() == World_CTF.horde))then
+
+		if(player:GetTeam() == 0)then player:AddAura(23335, player); end
+		if(player:GetTeam() == 1)then player:AddAura(23333, player); end
+	end
+end
+
+RegisterPlayerEvent(27, Player_Change_Zone)
 
 local function Team_Flag_Holder_Died(event, killer, victim)
 
