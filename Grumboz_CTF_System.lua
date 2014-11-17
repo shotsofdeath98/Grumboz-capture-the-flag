@@ -9,12 +9,12 @@ print("******* Grumbo'z CTF System *******")
 print("* Capture The Flag System Loading *")
 
 -- flag_id is the starting Gobject id flag id.
--- CTF_timer is the pause between rounds
 -- CTF_round_timer is the duration of a round
+-- CTF_round_timer is the pause between rounds
 
 local flag_id = 600000
-local CTF_timer = 1800000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 local CTF_round_timer = 1500000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes // 1500000 = 20 minutes //  1800000 = 30 minutes
+local CTF_spawn_timer = 1800000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
 local team_flag_loc = {
 		[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Throne room.
