@@ -58,7 +58,7 @@ end
 local function RemoveWorldFlag(event, duration, cycle, gob)
 	gob:Despawn()
 	gob:RemoveFromWorld()
-	SendWorldMessage("CTF round over.")
+	SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
 end
 
 local function Spawn_Team_Flags(team)
