@@ -106,7 +106,7 @@ Spawn_Team_Flags(2)
 end
 
 Spawn_Flags()
-CreateLuaEvent(Spawn_Flags, CTF_spawn_timer + CTF_spawn_timer, 0)
+CreateLuaEvent(Spawn_Flags, CTF_round_timer + CTF_spawn_timer, 0)
 
 print("******** Team Flags Spawned *******")
 print("******** World Flag Spawned *******")
