@@ -16,7 +16,7 @@ local team_flag_loc = {
 			};
 
 local World_flag_loc = {
-		[1] = {map, x, y, z, o}, -- central flag location
+		[1] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- central flag location temp Shattrath
 			};
 
 local World_CTF = {
@@ -45,7 +45,8 @@ print("******** Team Flags Spawned *******")
 
 local function Spawn_World_Flag(team)
 
-local map, x, y, z, o = table.unpack(World_flag_loc[1])
+local loc = math.random(1, #World_flag_loc)
+local map, x, y, z, o = table.unpack(World_flag_loc[loc])
 local flag = (flag_id + 1)+team
 
 PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
