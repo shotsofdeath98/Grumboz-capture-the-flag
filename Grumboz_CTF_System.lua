@@ -116,6 +116,7 @@ end
 
 RegisterPlayerEvent(6, Team_Flag_Holder_Died)
 RegisterPlayerEvent(8, Team_Flag_Holder_Died)
+RegisterPlayerEvent(4, Team_Flag_Holder_Died)
 
 print("** Capture The Flag System ready **")
 print("***********************************\n")
