@@ -106,17 +106,27 @@ end
 
 RegisterPlayerEvent(27, Player_Change_Zone)
 
-local function Team_Flag_Holder_Died(event, killer, victim)
+local function ReturnFlag(player)
 
-	if((victim:GetGUIDLow() == World_CTF.alliance)or(victim:GetGUIDLow() == World_CTF.horde))then
-		if(victim:GetTeam() == 0)then World_CTF.alliance = nil Spawn_Team_Flags(victim:GetTeam()+1); end
-		if(victim:GetTeam() == 1)then World_CTF.horde = nil Spawn_Team_Flags(victim:GetTeam()+1); end
+	if((player:GetGUIDLow() == World_CTF.alliance)or(player:GetGUIDLow() == World_CTF.horde))then
+
+		if(player:GetTeam() == 0)then World_CTF.alliance = nil Spawn_Team_Flags(player:GetTeam()+1) player:RemoveAura(23335); end
+		if(player:GetTeam() == 1)then World_CTF.horde = nil Spawn_Team_Flags(player:GetTeam()+1) player:RemoveAura(23333); end
 	end
 end
 
-RegisterPlayerEvent(6, Team_Flag_Holder_Died)
+local function Team_Flag_Holder_Died(event, killer, player)
+	ReturnFlag(player)
+end
+
 RegisterPlayerEvent(8, Team_Flag_Holder_Died)
-RegisterPlayerEvent(4, Team_Flag_Holder_Died)
+RegisterPlayerEvent(6, Team_Flag_Holder_Died)
+
+local function PlayerLogOut(event, player)
+	ReturnFlag(player)
+end
+
+RegisterPlayerEvent(4, PlayerLogOut)
 
 print("** Capture The Flag System ready **")
 print("***********************************\n")
