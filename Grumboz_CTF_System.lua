@@ -9,6 +9,7 @@ print("******* Grumbo'z CTF System *******")
 print("* Capture The Flag System Loading *")
 
 local flag_id = 600000
+local CTF_timer = 1800000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
 local team_flag_loc = {
 		[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
@@ -30,10 +31,18 @@ local World_flag_loc = {
 			}; -- add more key locations so the world flag will jump around the world randomly.
 
 local World_CTF = {
-		alliance = 0,
-		horde = 0,
-		flag_guid = nil,
+		alliance = nil,
+		horde = nil,
+		team = nil,
+		team_name = {
+			[1] = "Alliance", 
+			[2] = "Horde"
+					},
 			};
+
+local function GetTeamName(team)
+	if(team == 0)then return "Alliance" else return "Horde"; end
+end
 
 local function RemoveFlag(event, duration, cycle, go)
 	 go:Despawn()
@@ -48,11 +57,6 @@ PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
 
 end	
 
-Spawn_Team_Flags(1)
-Spawn_Team_Flags(2)
-
-print("******** Team Flags Spawned *******")
-
 local function Spawn_World_Flag(team)
 
 local loc = math.random(1, #World_flag_loc)
@@ -63,8 +67,23 @@ PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
 
 end
 
-Spawn_World_Flag(3)
+local function Spawn_Flags()
 
+Spawn_Team_Flags(1)
+Spawn_Team_Flags(2)
+
+	if(World_CTF.team)then
+		Spawn_World_Flag(World_CTF.team)
+		SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed.")
+		SendWorldMessage("Time to Find that World Flag for your team's honor.")
+	else
+		Spawn_World_Flag(3)
+	end
+end
+
+Spawn_Flags()
+
+print("******** Team Flags Spawned *******")
 print("******** World Flag Spawned *******")
 
 local function Tag_Ally_Flag(event, player, go)
@@ -91,12 +110,12 @@ local function Tag_World_Flag(event, player, go)
 	if((player:GetGUIDLow() == World_CTF.alliance)or(player:GetGUIDLow() == World_CTF.horde))then
 		World_CTF.alliance = 0
 		World_CTF.horde = 0
+		World_CTF.team = (player:GetTeam()+1)
 		go:RegisterEvent(RemoveFlag, 1, 1)
-		Spawn_World_Flag(player:GetTeam()+1)
 		player:RemoveAura(23333)
 		player:RemoveAura(23335)
-		Spawn_Team_Flags(1)
-		Spawn_Team_Flags(2)
+		local pause = CreateLuaEvent(Spawn_Flags, CTF_timer, 1)
+		SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." have Captured The World Flag.")
 	else
 	end
 end
