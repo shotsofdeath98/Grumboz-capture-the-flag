@@ -10,4 +10,5 @@ you goal is to get your team flag to the world flag to capture the world flag.
 the world flag will change based on what team captures the world flag.
 
 easy to setup.
-just find a nice zone and set your gps coordinates for each flag then restart core.
+just find a nice spot and set your gps coordinates for each flag then restart core.
+the world flag can be placed at any location. the script will compensate for zone/map changes.
