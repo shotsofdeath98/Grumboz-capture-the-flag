@@ -56,16 +56,19 @@ local function RemoveFlag(event, duration, cycle, go, a, b, c)
 end
 
 local function RemoveWorldFlag(event, duration, cycle, gob)
-	gob:Despawn()
-	gob:RemoveFromWorld()
-	SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
-	
-		for _,v in ipairs(GetPlayersInWorld())do
+gob:Despawn()
+gob:RemoveFromWorld()
+SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
 
+	for _,v in ipairs(GetPlayersInWorld())do
+
+		if(v:InBattleground() ~= true)then
+	
 			if(v:HasAura(23332))then v:RemoveAura(23332); end
 			if(v:HasAura(23333))then v:RemoveAura(23333); end
 			
 		end
+	end
 end
 
 local function Spawn_Team_Flags(team)
