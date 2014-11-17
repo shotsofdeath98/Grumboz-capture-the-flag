@@ -11,13 +11,13 @@ print("* Capture The Flag System Loading *")
 local flag_id = 600000
 
 local team_flag_loc = {
-			[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
-			[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
-						};
+		[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
+		[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
+			};
 
 local World_flag_loc = {
-			[1] = {1, 1334.818359, -4380.359375, 26.207428, 0.261494}, -- central flag location
-						};
+		[1] = {map, x, y, z, o}, -- central flag location
+			};
 
 local World_CTF = {
 		alliance = 0,
