@@ -22,17 +22,17 @@ local team_flag_loc = {
 			};
 
 local World_flag_loc = {
-		[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- central flag location Crystalein cave
-		[2] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- central flag location Shattrath
-		[3] = {0, -7303.852539, -1063.009888, 277.069305, 6.033762}, -- central flag location BlackRock Mountain
-		[4] = {1, -1030.969238, 1790.895264, 65.066193, 5.895199}, -- central flag location Desolace
-		[5] = {1, -6611.236328, -1429.580200, -268.325745, 3.924639}, -- central flag location Lakkari Tar Pits
-		[6] = {1, -3032.970947, -3087.337646, 66.752686, 5.794240}, -- central flag location Dustwallow Marsh
-		[7] = {530, -424.795105, 1661.167969, 57.115944, 0.642495}, -- central flag location The Legion Front
-		[8] = {530, -722.230864, 5513.937012, 23.676741, 0.961376}, -- central flag location ZangarMarsh
-		[9] = {530, 3523.850586, 2934.691406, 137.001068, 3.845476}, -- central flag location Eco-Dome Midrealm
-		[10] = {571, 2649.121826, 317.876343, 93.201843, 6.254735}, -- central flag location The Frozen Sea
-		[11] = {571, 6149.879395, 5117.969727, -97.113358, 2.221082}, -- central flag location MistWhisper Refuge
+		[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- World flag location Crystalein cave
+		[2] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- World flag location Shattrath
+		[3] = {0, -7303.852539, -1063.009888, 277.069305, 6.033762}, -- World flag location BlackRock Mountain
+		[4] = {1, -1030.969238, 1790.895264, 65.066193, 5.895199}, -- World flag location Desolace
+		[5] = {1, -6611.236328, -1429.580200, -268.325745, 3.924639}, -- World flag location Lakkari Tar Pits
+		[6] = {1, -3032.970947, -3087.337646, 66.752686, 5.794240}, -- World flag location Dustwallow Marsh
+		[7] = {530, -424.795105, 1661.167969, 57.115944, 0.642495}, -- World flag location The Legion Front
+		[8] = {530, -722.230864, 5513.937012, 23.676741, 0.961376}, -- World flag location ZangarMarsh
+		[9] = {530, 3523.850586, 2934.691406, 137.001068, 3.845476}, -- World flag location Eco-Dome Midrealm
+		[10] = {571, 2649.121826, 317.876343, 93.201843, 6.254735}, -- World flag location The Frozen Sea
+		[11] = {571, 6149.879395, 5117.969727, -97.113358, 2.221082}, -- World flag location MistWhisper Refuge
 			}; -- add more key locations so the world flag will jump around the world randomly.
 -- DON'T Edit ANYTHING Below here UNLESS you REALLY know what your doing --
 
@@ -43,32 +43,36 @@ local World_CTF = {
 		team_name = {
 			[1] = "Alliance", 
 			[2] = "Horde"
-				},
-		};
+					},
+				};
 
 local function GetTeamName(team)
-	if(team == 0)then return "Alliance" else return "Horde"; end
+	return World_CTF.team_name[team+1]
 end
 
-local function RemoveFlag(event, duration, cycle, go, a, b, c)
-	 go:Despawn()
-	 go:RemoveFromWorld()
-end
+local function RemoveAuras(event, duration, cycle)
 
-local function RemoveWorldFlag(event, duration, cycle, gob)
-gob:Despawn()
-gob:RemoveFromWorld()
 SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
 
 	for _,v in ipairs(GetPlayersInWorld())do
 
 		if(v:InBattleground() == false)then
-	
+
 			if(v:HasAura(23332))then v:RemoveAura(23332); end
 			if(v:HasAura(23333))then v:RemoveAura(23333); end
-			
+
 		end
 	end
+end
+
+local function RemoveFlag(event, duration, cycle, go)
+	 go:Despawn()
+	 go:RemoveFromWorld()
+end
+
+local function RemoveWorldFlag(event, duration, cycle, go)
+go:RemoveFromWorld()
+go:Despawn()
 end
 
 local function Spawn_Team_Flags(team)
@@ -85,7 +89,7 @@ local loc = math.random(1, #World_flag_loc)
 local map, x, y, z, o = table.unpack(World_flag_loc[loc])
 local flag = (flag_id + 1)+team
 local gob = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
-gob:RegisterEvent(RemoveWorldFlag, CTF_round_timer, 1)
+gob:RegisterEvent(RemoveWorldFlag, CTF_round_timer, 1);
 
 end
 
@@ -103,10 +107,11 @@ Spawn_Team_Flags(2)
 		SendWorldMessage("The World Flag has been placed some where.")
 		SendWorldMessage("Now it's time to Find that Flag for your team's honor.")
 	end
+CreateLuaEvent(Spawn_Flags, CTF_round_timer + CTF_spawn_timer, 1)
+CreateLuaEvent(RemoveAuras, CTF_round_timer, 1)
 end
 
 Spawn_Flags()
-CreateLuaEvent(Spawn_Flags, CTF_round_timer + CTF_spawn_timer, 0)
 
 print("******** Team Flags Spawned *******")
 print("******** World Flag Spawned *******")
