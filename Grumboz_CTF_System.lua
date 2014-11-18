@@ -3,15 +3,18 @@
 -- For Trinity Core 2 3.3.5a
 -- simple system that will randomly spawn a world flag at different locations.
 -- your job is to get your team flag to the world flag and tag it.
+-- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
 
 print("\n***********************************")
 print("******* Grumbo'z CTF System *******")
 print("* Capture The Flag System Loading *")
 
+-- wil_o_whisp is for world single spawn point or multiple spawn points. 0 == one spawn point(#1) / 1 == multiple spawn points
 -- flag_id is the starting Gobject id flag id.
 -- CTF_round_timer is the duration of a round
 -- CTF_round_timer is the pause between rounds
 
+local wil_o_whisp = 1; -- default == 1/on(world flag random spawning on)
 local flag_id = 600000
 local CTF_round_timer = 1500000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes // 1500000 = 20 minutes //  1800000 = 30 minutes
 local CTF_spawn_timer = 1800000 -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
@@ -66,13 +69,17 @@ SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
 end
 
 local function RemoveFlag(event, duration, cycle, go)
-	 go:Despawn()
-	 go:RemoveFromWorld()
+
+go:Despawn()
+go:RemoveFromWorld()
+
 end
 
 local function RemoveWorldFlag(event, duration, cycle, go)
+
 go:RemoveFromWorld()
 go:Despawn()
+
 end
 
 local function Spawn_Team_Flags(team)
@@ -85,7 +92,16 @@ end
 
 local function Spawn_World_Flag(team)
 
-local loc = math.random(1, #World_flag_loc)
+math.randomseed(GetGameTime()*GetGameTime())
+
+local loc = 0
+
+	if(wil_o_whisp > 0)then
+		loc = math.random(1, #World_flag_loc)
+	else
+		loc = 1
+	end
+
 local map, x, y, z, o = table.unpack(World_flag_loc[loc])
 local flag = (flag_id + 1)+team
 local gob = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
@@ -99,9 +115,16 @@ Spawn_Team_Flags(1)
 Spawn_Team_Flags(2)
 
 	if(World_CTF.team)then
+	
 		Spawn_World_Flag(World_CTF.team)
-		SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.")
-		SendWorldMessage("Now it's time to Find that World Flag for your team's honor.")
+
+		if(Wil_o_whisp < 1)then
+			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.")
+			SendWorldMessage("Now it's time to Fight and take that World Flag.")
+		else
+			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.")
+			SendWorldMessage("Now it's time to Find that World Flag for your team's honor.")
+		end
 	else
 		Spawn_World_Flag(3)
 		SendWorldMessage("The World Flag has been placed some where.")
@@ -156,6 +179,8 @@ local function Tag_World_Flag(event, player, go)
 		end
 	else
 		player:SendBroadcastMessage("?Huh .. What ..?")
+		player:SendBroadcastMessage("Stop bothering me..")
+		player:SendBroadcastMessage("!! I was trying to sleep.!!")
 	end
 end
 
