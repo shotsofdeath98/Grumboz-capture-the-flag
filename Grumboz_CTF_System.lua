@@ -25,7 +25,7 @@ local team_flag_loc = {
 			};
 
 local World_flag_loc = {
-		[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- World flag location Crystalein cave
+		[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- [PRIMARY] World flag location Crystalein cave
 		[2] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- World flag location Shattrath
 		[3] = {0, -7303.852539, -1063.009888, 277.069305, 6.033762}, -- World flag location BlackRock Mountain
 		[4] = {1, -1030.969238, 1790.895264, 65.066193, 5.895199}, -- World flag location Desolace
