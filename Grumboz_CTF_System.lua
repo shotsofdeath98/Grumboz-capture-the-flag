@@ -70,24 +70,21 @@ end
 
 local function RemoveFlag(event, duration, cycle, go)
 
-go:Despawn()
-go:RemoveFromWorld()
-
+	go:Despawn()
+	go:RemoveFromWorld()
 end
 
 local function RemoveWorldFlag(event, duration, cycle, go)
 
-go:RemoveFromWorld()
-go:Despawn()
-
+	go:RemoveFromWorld()
+	go:Despawn()
 end
 
 local function Spawn_Team_Flags(team)
 
-local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team])
-local gob = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
-gob:RegisterEvent(RemoveFlag, CTF_round_timer, 1)
-
+	local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team])
+	local gob = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
+	gob:RegisterEvent(RemoveFlag, CTF_round_timer, 1)
 end	
 
 local function Spawn_World_Flag(team)
