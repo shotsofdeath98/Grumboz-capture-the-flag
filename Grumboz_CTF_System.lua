@@ -1,7 +1,7 @@
 -- Grumbo'z Capture The Flag System - Wil-o-whisp -
 -- by slp13at420 of EmuDevs.com
 -- For Trinity Core 2 3.3.5a
--- simple system that will randomly spawn a world flag at different locations.
+-- A system that will randomly spawn a world flag at different locations.
 -- your job is to get your team flag to the world flag and tag it.
 -- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
 
