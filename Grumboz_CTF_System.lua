@@ -23,7 +23,7 @@ local CTF_round_timer = 1500000; -- in ms. :: Default = 1800000 :: 300000 = 5 mi
 local CTF_spawn_timer = 300000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
 local World_flag_loc = {
-			[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- central flag location Crystalein cave
+			[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- [PRIMARY] central flag location Crystalein cave
 			[2] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- central flag location Shattrath
 			[3] = {0, -7303.852539, -1063.009888, 277.069305, 6.033762}, -- central flag location BlackRock Mountain
 			[4] = {1, -1030.969238, 1790.895264, 65.066193, 5.895199}, -- central flag location Desolace
