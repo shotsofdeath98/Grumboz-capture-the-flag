@@ -194,6 +194,7 @@ math.randomseed(GetGameTime()*GetGameTime())
 	local flag = (flag_id + 1) + World_CTF.team
 	local gob = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
 	World_CTF.FLAG[3] = gob
+	print("CTF_SPAWN_LOC", loc)
 end
 
 local function Spawn_Flags()
@@ -231,8 +232,6 @@ local function Tag_Team_Flag(event, player, go)
 		RemoveFlag(1, 1, 1, go)
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
-
-print("TAG_ALLY", "ALLY", World_CTF.Alliance, "HORDE", World_CTF.Horde,"team_name", team_name)
 	end
 end
 
@@ -343,12 +342,15 @@ World_CTF.gear = (World_CTF.gear + 1)
 	end
 end
 
+	if(CTF == 0)then 
+	 	print("** Capture The Flag System idle. **")
+		print(" *********************************\n")
+	end
+
 	if(CTF == 1)then 
-		Proccess()
 		print("******* Team Flag timers on *******")
 		print("******* World Flag timer on *******")
 	 	print("** Capture The Flag System ready **") 
-	 else 
-	 	print("** Capture The Flag System idle. **")
+		print(" *********************************\n")
+		Proccess()
 	 end
-print(" *********************************\n")
