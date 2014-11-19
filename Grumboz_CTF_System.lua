@@ -18,9 +18,9 @@ print("* Capture The Flag System Loading *")
 -- flag_id is the starting flag Gobject id.
 
 local CTF = 1; -- system operation switch. 0=system off/1=system on
-local wil_o_whisp = 0; -- default == 1/on(world flag random spawning on)
-local CTF_round_timer = 20000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
-local CTF_spawn_timer = 15000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
+local wil_o_whisp = 1; -- default == 1/on(world flag random spawning on)
+local CTF_round_timer = 1500000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
+local CTF_spawn_timer = 300000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
 local World_flag_loc = {
 			[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- central flag location Crystalein cave
@@ -183,7 +183,7 @@ math.randomseed(GetGameTime()*GetGameTime())
 		if(wil_o_whisp > 0)then
 			loc = math.random(1, #World_flag_loc)
 			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.")
-			SendWorldMessage("Now it's time to Find that World Flag for your team's honor.")
+			SendWorldMessage("Now it's time to FIND that World Flag for your team's honor.")
 		else
 			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.")
 			SendWorldMessage("Now it's time to Fight and take that World Flag.")
