@@ -21,6 +21,7 @@ print("* Capture The Flag System Loading *")
 local CTF = 1; -- system operation switch. 0=system off/1=system on
 local wil_o_whisp = 1; -- default == 1/on(world flag random spawning on)
 local required_players = 4; -- minimum required players
+local CTF_Player_Check = 10000; -- in ms. :: when not minimum players this timer will check often for minimum players
 local CTF_round_timer = 1800000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 local CTF_spawn_timer = 600000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
@@ -373,7 +374,7 @@ World_CTF.gear = (World_CTF.gear + 1)
 				CreateLuaEvent(Proccess, CTF_round_timer, 1)
 			else
 				if(World_CTF.service == 0)then print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS_"..pIw.."_OF_"..required_players); end
-				CreateLuaEvent(Proccess, (CTF_spawn_timer / 2), 1)
+				CreateLuaEvent(Proccess, CTF_Player_Check, 1)
 				World_CTF.service = 1;
 			end
 		
