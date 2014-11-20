@@ -225,9 +225,9 @@ ClearFlagHolder(0)
 ClearFlagHolder(1)
 RemoveAllAuras(1,1,1)
 
-		if(World_CTF.FLAG[1])then World_CTF.FLAG[1]:RegisterEvent(RemoveFlag, 100, 1); end
-		if(World_CTF.FLAG[2])then World_CTF.FLAG[2]:RegisterEvent(RemoveFlag, 110, 1); end
-		if(World_CTF.FLAG[3])then World_CTF.FLAG[3]:RegisterEvent(RemoveFlag, 120, 1); end
+	if(World_CTF.FLAG[1])then World_CTF.FLAG[1]:RegisterEvent(RemoveFlag, 100, 1); end
+	if(World_CTF.FLAG[2])then World_CTF.FLAG[2]:RegisterEvent(RemoveFlag, 110, 1); end
+	if(World_CTF.FLAG[3])then World_CTF.FLAG[3]:RegisterEvent(RemoveFlag, 120, 1); end
 			
 print("CTF_ROUND_END")
 end	
