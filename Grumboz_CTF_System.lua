@@ -58,7 +58,7 @@ local World_CTF = {
 		team_name = {
 			[1] = "Alliance",
 			[2] = "Horde",
-			[3] = "World",
+			[3] = "Realm",
 					},
 		gear = 0,
 		service = 0,
