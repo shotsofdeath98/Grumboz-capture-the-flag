@@ -174,9 +174,8 @@ local team = team_id+1
 
 	local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team])
 
-	if(PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o))then
-		local gob = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
-		World_CTF.FLAG[team] = gob
+	if(flag_id)then
+		World_CTF.FLAG[team] = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
 	else
 		print("CTF_"..World_CTF.team_name[team].."_FLAG_SPAWN_ERR")
 	end
@@ -201,9 +200,8 @@ math.randomseed(GetGameTime()*GetGameTime())
 	local map, x, y, z, o = table.unpack(World_flag_loc[loc])
 	local flag = (flag_id + 1) + World_CTF.team
 	
-		if(PerformIngameSpawn(2, flag, map, 0, x, y, z, o))then
-			local gob = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
-			World_CTF.FLAG[3] = gob
+		if(map)then
+			World_CTF.FLAG[3] = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
 			print("CTF_FLAG_LOC", loc)
 		else
 			print("CTF_W_FLAG_SPAWN_ERR")
@@ -227,14 +225,10 @@ ClearFlagHolder(0)
 ClearFlagHolder(1)
 RemoveAllAuras(1,1,1)
 
-	for a=1,3 do
-
-		if(World_CTF.FLAG[a])then
-
-			World_CTF.FLAG[a]:RegisterEvent(RemoveFlag, (100 + (a*10)), 1)
-
-		end
-	end
+		if(World_CTF.FLAG[1])then World_CTF.FLAG[1]:RegisterEvent(RemoveFlag, 100, 1); end
+		if(World_CTF.FLAG[2])then World_CTF.FLAG[2]:RegisterEvent(RemoveFlag, 110, 1); end
+		if(World_CTF.FLAG[3])then World_CTF.FLAG[3]:RegisterEvent(RemoveFlag, 120, 1); end
+			
 print("CTF_ROUND_END")
 end	
 
