@@ -344,6 +344,7 @@ RegisterPlayerEvent(8, Team_Flag_Holder_reset)
 local function Proccess()
 
 local pIw = #GetPlayersInWorld()
+
 World_CTF.gear = (World_CTF.gear + 1)
 
 	if(World_CTF.gear == 3)then
@@ -360,7 +361,7 @@ World_CTF.gear = (World_CTF.gear + 1)
 			if(pIw >= required_players)then
 				Spawn_Flags()
 			else
-				print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS")
+				print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS_"..pIw.."_OF_"..required_players)
 			end
 		
 		CreateLuaEvent(Proccess, CTF_round_timer, 1)
