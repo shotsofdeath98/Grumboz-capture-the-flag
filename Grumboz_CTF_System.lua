@@ -133,7 +133,7 @@ local function SetFlagHolder(guid, team)
 	end
 end
 
-local function RemoveFlag(eventid, duration, cycles, go)
+local function RemoveFlag(go)
 
 	if(go)then
 
@@ -145,7 +145,7 @@ local function RemoveFlag(eventid, duration, cycles, go)
 	end
 end
 	
-local function RemoveWorldFlag(eventid, duration, cycles, go)
+local function RemoveWorldFlag(go)
 
 	if(go)then
 	
@@ -226,9 +226,9 @@ ClearFlagHolder(0)
 ClearFlagHolder(1)
 RemoveAllAuras(1,1,1)
 
-	if(World_CTF.FLAG[1])then World_CTF.FLAG[1]:RegisterEvent(RemoveFlag, 100, 1); end
-	if(World_CTF.FLAG[2])then World_CTF.FLAG[2]:RegisterEvent(RemoveFlag, 110, 1); end
-	if(World_CTF.FLAG[3])then World_CTF.FLAG[3]:RegisterEvent(RemoveFlag, 120, 1); end
+	if(World_CTF.FLAG[1])then RemoveFlag(World_CTF.FLAG[1]); end
+	if(World_CTF.FLAG[2])then RemoveFlag(World_CTF.FLAG[2]); end
+	if(World_CTF.FLAG[3])then RemoveWorldFlag(World_CTF.FLAG[3]); end
 			
 print("CTF_ROUND_END")
 end	
@@ -243,7 +243,7 @@ local function Tag_Ally_Flag(event, player, go)
 	
 		local team_name = GetTeamName(player:GetTeam())
 	
-		RemoveFlag(1, 1, 1, go)
+		RemoveFlag(go)
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
 		print("CTF_TAG_ATF")
@@ -256,7 +256,7 @@ local function Tag_Horde_Flag(event, player, go)
 	
 		local team_name = GetTeamName(player:GetTeam())
 	
-		RemoveFlag(1, 1, 1, go)
+		RemoveFlag(go)
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
 		print("CTF_TAG_HTF")
@@ -277,6 +277,7 @@ local function Tag_World_Flag(event, player, go)
 	
 			if((player:HasAura(23335))or(player:HasAura(23333)))then
 				EndRound()
+				RemoveWorldFlag(go)
 				World_CTF.team = (player:GetTeam()+1)
 				SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
 				SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
