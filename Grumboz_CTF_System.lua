@@ -251,9 +251,8 @@ local function Tag_Ally_Flag(event, player, go)
 		RemoveFlag(1, 1, 1, go)
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
-
+		print("CTF_TAG_ATF")
 	end
-print("CTF_TAG_ATF")
 end
 
 local function Tag_Horde_Flag(event, player, go)
@@ -265,9 +264,8 @@ local function Tag_Horde_Flag(event, player, go)
 		RemoveFlag(1, 1, 1, go)
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
-
+		print("CTF_TAG_HTF")
 	end
-print("CTF_TAG_HTF")
 end
 
 RegisterGameObjectGossipEvent(flag_id, 1, Tag_Ally_Flag)
