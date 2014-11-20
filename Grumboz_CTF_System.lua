@@ -277,7 +277,6 @@ local function Tag_World_Flag(event, player, go)
 	
 			if((player:HasAura(23335))or(player:HasAura(23333)))then
 				EndRound()
-				RemoveWorldFlag(go)
 				World_CTF.team = (player:GetTeam()+1)
 				SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
 				SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
