@@ -60,6 +60,7 @@ local World_CTF = {
 			[3] = "World",
 					},
 		gear = 0,
+		service = 0,
 		Aura = { -- flag holder auras from wsg.
 		[1] = 23335,
 		[2] = 23333,
@@ -241,9 +242,9 @@ end
 -- * Flag Triggers *
 -- *****************
 
-local function Tag_Team_Flag(event, player, go)
+local function Tag_Ally_Flag(event, player, go)
 
-	if(player:GetTeam())then
+	if(player:GetTeam() == 0)then
 	
 		local team_name = GetTeamName(player:GetTeam())
 	
@@ -252,11 +253,25 @@ local function Tag_Team_Flag(event, player, go)
 		PlayerAddAura(player)
 
 	end
-print("CTF_TAG_TF")
+print("CTF_TAG_ATF")
 end
 
-RegisterGameObjectGossipEvent(flag_id, 1, Tag_Team_Flag)
-RegisterGameObjectGossipEvent(flag_id+1, 1, Tag_Team_Flag)
+local function Tag_Horde_Flag(event, player, go)
+
+	if(player:GetTeam() == 1)then
+	
+		local team_name = GetTeamName(player:GetTeam())
+	
+		RemoveFlag(1, 1, 1, go)
+		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
+		PlayerAddAura(player)
+
+	end
+print("CTF_TAG_HTF")
+end
+
+RegisterGameObjectGossipEvent(flag_id, 1, Tag_Ally_Flag)
+RegisterGameObjectGossipEvent(flag_id+1, 1, Tag_Horde_Flag)
 
 local function Tag_World_Flag(event, player, go)
 
@@ -347,6 +362,8 @@ local pIw = #GetPlayersInWorld()
 
 World_CTF.gear = (World_CTF.gear + 1)
 
+	if((World_CTF.service == 1)and(World_CTF.gear == 3))then  World_CTF.gear = 1; end
+
 	if(World_CTF.gear == 3)then
 		SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
 		EndRound()
@@ -359,12 +376,15 @@ World_CTF.gear = (World_CTF.gear + 1)
 		World_CTF.Start = GetGameTime()
 
 			if(pIw >= required_players)then
+				World_CTF.service = 0;
 				Spawn_Flags()
+				CreateLuaEvent(Proccess, CTF_round_timer, 1)
 			else
-				print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS_"..pIw.."_OF_"..required_players)
+				if(World_CTF.service == 0)then print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS_"..pIw.."_OF_"..required_players); end
+				CreateLuaEvent(Proccess, (CTF_spawn_timer / 2), 1)
+				World_CTF.service = 1;
 			end
 		
-		CreateLuaEvent(Proccess, CTF_round_timer, 1)
 		World_CTF.gear = 2;
 	end
 end
