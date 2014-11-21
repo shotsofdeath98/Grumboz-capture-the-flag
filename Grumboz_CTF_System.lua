@@ -4,6 +4,7 @@
 -- A system that will randomly spawn a world flag at different locations.
 -- your job is to get your team flag to the world flag and tag it.
 -- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
+-- Released to EmuDevs.com . Please dont remove any credits.
 
 print("\n *********************************")
 print("******* Grumbo'z CTF System *******")
@@ -133,26 +134,25 @@ local function SetFlagHolder(guid, team)
 	end
 end
 
-local function RemoveFlag(go)
+local function RemoveFlag(go, team_id)
 
 	if(go)then
 
-		if(go:RemoveFromWorld())then
-
-			go:RemoveEvents()
-			go:RemoveFromWorld()
-		end
+		local team = team_id + 1
+		go:RemoveEvents()
+		go:RemoveFromWorld()
+		World_CTF.FLAG[team] = nil;
 	end
 end
 	
-local function RemoveWorldFlag(go)
+local function RemoveWorldFlag(go, team_id)
 
 	if(go)then
-	
-		if(go:RemoveFromWorld())then
-			go:RemoveEvents()
-			go:RemoveFromWorld()
-		end
+
+		local team = team_id
+		go:RemoveEvents()
+		go:RemoveFromWorld()
+		World_CTF.FLAG[team] = nil;
 	end
 end
 
@@ -226,9 +226,9 @@ ClearFlagHolder(0)
 ClearFlagHolder(1)
 RemoveAllAuras(1,1,1)
 
-	if(World_CTF.FLAG[1])then RemoveFlag(World_CTF.FLAG[1]); end
-	if(World_CTF.FLAG[2])then RemoveFlag(World_CTF.FLAG[2]); end
-	if(World_CTF.FLAG[3])then RemoveWorldFlag(World_CTF.FLAG[3]); end
+	if(World_CTF.FLAG[1])then RemoveFlag(World_CTF.FLAG[1], 0); end
+	if(World_CTF.FLAG[2])then RemoveFlag(World_CTF.FLAG[2], 1); end
+	if(World_CTF.FLAG[3])then RemoveWorldFlag(World_CTF.FLAG[3], 3); end
 			
 print("CTF_ROUND_END")
 end	
@@ -256,7 +256,7 @@ local function Tag_Horde_Flag(event, player, go)
 	
 		local team_name = GetTeamName(player:GetTeam())
 	
-		RemoveFlag(go)
+		RemoveFlag(go, player:GetTeam())
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
 		print("CTF_TAG_HTF")
@@ -382,14 +382,18 @@ World_CTF.gear = (World_CTF.gear + 1)
 	end
 end
 
-	if(CTF == 0)then 
-	 	print("** Capture The Flag System idle. **")
+	if(CTF == 0)then
+		print("** Capture The Flag System idle. **")
 		print(" *********************************\n")
 	end
-
 	if(CTF == 1)then 
-		print("******* Team Flag timers on *******")
-		print("******* World Flag timer on *******")
+		print("*       Team Flag timers on       *")
+			if(wil_o_whisp == 1)then
+				print("*      Wil - o - Whisp active     *") 
+			else
+				print("*      Wil - o - Whisp -idle-     *")
+			end
+		print("*       World Flag timer on       *")
 	 	print("** Capture The Flag System ready **") 
 		print(" *********************************\n")
 		Proccess()
