@@ -1,10 +1,12 @@
--- Grumbo'z Capture The Flag System - Wil-o-whisp -
+-- Grumbo'z Capture The Flag System
 -- by slp13at420 of EmuDevs.com
--- For Trinity Core 2 3.3.5a
--- A system that will randomly spawn a world flag at different locations.
--- your job is to get your team flag to the world flag and tag it.
--- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
+-- For Trinity Core2 3.3.5a
+-- - Wil-o-whisp - Version
 -- Released to EmuDevs.com . Please dont remove any credits.
+
+-- A Chaotic system that will spawn a world flag at a same/different location.
+-- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
+-- your players job is to get there team flag to the world flag and tag it.
 
 print("\n *********************************")
 print("******* Grumbo'z CTF System *******")
@@ -139,7 +141,6 @@ local function RemoveFlag(go, team_id)
 	if(go)then
 
 		local team = team_id + 1
-		go:RemoveEvents()
 		go:RemoveFromWorld()
 		World_CTF.FLAG[team] = nil;
 	end
@@ -150,7 +151,6 @@ local function RemoveWorldFlag(go, team_id)
 	if(go)then
 
 		local team = team_id
-		go:RemoveEvents()
 		go:RemoveFromWorld()
 		World_CTF.FLAG[team] = nil;
 	end
@@ -160,8 +160,6 @@ local function PlayerAddAura(player)
 
 	local aura = World_CTF.Aura[player:GetTeam()+1]
 	player:AddAura(aura, player)
-	player:RegisterEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
-	CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
 
 end
 
@@ -214,6 +212,7 @@ local function Spawn_Flags()
 	Spawn_Team_Flags(0)
 	Spawn_Team_Flags(1)
 	Spawn_World_Flag()
+	CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
 	print("CTF_ROUND_START")
 
 end
@@ -243,7 +242,7 @@ local function Tag_Ally_Flag(event, player, go)
 	
 		local team_name = GetTeamName(player:GetTeam())
 	
-		RemoveFlag(go)
+		RemoveFlag(go, player:GetTeam())
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
 		print("CTF_TAG_ATF")
@@ -280,6 +279,7 @@ local function Tag_World_Flag(event, player, go)
 				World_CTF.team = (player:GetTeam()+1)
 				SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
 				SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
+				print("CTF_TAG_WF")
 			else
 				player:SendBroadcastMessage("You seem to have dropped the flag...")
 			end
@@ -287,11 +287,9 @@ local function Tag_World_Flag(event, player, go)
 			player:SendBroadcastMessage(World_CTF.Ann_conf[math.random(1, #World_CTF.Ann_conf)])
 		end
 	else
-		RemovePlayerAura(player)
 		Spawn_Team_Flags(player:GetTeam())
 		player:SendBroadcastMessage(World_CTF.Ann_mad[math.random(1, #World_CTF.Ann_mad)])
 	end
-print("CTF_TAG_WF")
 end
 
 RegisterGameObjectGossipEvent(flag_id+2, 1, Tag_World_Flag)
