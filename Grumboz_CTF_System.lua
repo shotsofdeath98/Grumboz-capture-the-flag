@@ -1,11 +1,12 @@
--- Grumbo'z Capture The Flag System
+-- Grumbo'z Capture The Flag System -Wil-O-Whisp-
 -- by slp13at420 of EmuDevs.com
 -- For Trinity Core2 3.3.5a
--- - Wil-o-whisp - Version
 -- Released to EmuDevs.com . Please dont remove any credits.
 
+-- - Wil-o-whisp - Version
 -- A Chaotic system that will spawn a world flag at a same/different location.
 -- with wil-o-whisp on. the world flag will randomly spawn in the world and players must find it.
+-- with wil-o-whisp off. the world flag will spawn at 1 location.
 -- your players job is to get there team flag to the world flag and tag it.
 
 print("\n *********************************")
