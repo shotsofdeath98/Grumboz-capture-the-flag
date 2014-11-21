@@ -66,6 +66,7 @@ local World_CTF = {
 					},
 		gear = 0,
 		service = 0,
+		flag_allow = 0,
 		Aura = { -- flag holder auras from wsg.
 		[1] = 23335,
 		[2] = 23333,
@@ -210,6 +211,7 @@ end
 
 local function Spawn_Flags()
 
+	World_CTF.flag_allow = 1;
 	Spawn_Team_Flags(0)
 	Spawn_Team_Flags(1)
 	Spawn_World_Flag()
@@ -222,6 +224,7 @@ end
 
 local function EndRound() -- event, duration, cycles, 
 
+World_CTF.flag_allow = 0;
 ClearFlagHolder(0)
 ClearFlagHolder(1)
 RemoveAllAuras(1,1,1)
@@ -301,11 +304,36 @@ RegisterGameObjectGossipEvent(flag_id+4, 1, Tag_World_Flag)
 -- * Catch 22's *
 -- **************
 
-local function Return_Flag(team)
-	
-	Spawn_Team_Flags(team)
+local function clear_aura(event, player)
 
+	if(player:InBattleground() == false)then
+
+		RemovePlayerAura(player)
+	end
 end
+
+RegisterPlayerEvent(3, clear_aura) -- login
+RegisterPlayerEvent(36, clear_aura) -- revive
+
+local function Return_Flag(event, a, b, c)
+
+if(event == (6 or 8))then player = c else player = a; end
+
+	if(player:InBattleground() == false)then
+
+		if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
+			ClearFlagHolder(player:GetTeam())
+			
+				if(World_CTF.flag_allow == 1)then
+					Spawn_Team_Flags(player:GetTeam())
+				end
+		end
+	end
+end
+
+RegisterPlayerEvent(4, Return_Flag) -- logout
+RegisterPlayerEvent(6, Return_Flag) -- die by plr
+RegisterPlayerEvent(8, Return_Flag) -- die by npc
 
 local function Player_Change_Zone(event, player, newZone, newArea)
 
@@ -317,36 +345,6 @@ local function Player_Change_Zone(event, player, newZone, newArea)
 end
 
 RegisterPlayerEvent(27, Player_Change_Zone)
-
-local function Team_Flag_Holder_logout(event, player)
-
-	if(player)then
-		if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
-
-			Spawn_Team_Flags(player:GetTeam())
-			ClearFlagHolder(player:GetTeam())
-			RemovePlayerAura(player)
-		end
-	end
-end
-
-RegisterPlayerEvent(4, Team_Flag_Holder_logout)
-
-local function Team_Flag_Holder_reset(event, _, player)
-
-	if(player)then
-
-		if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
-
-			Spawn_Team_Flags(player:GetTeam())
-			ClearFlagHolder(player:GetTeam())
-			RemovePlayerAura(player)
-		end
-	end
-end
-
-RegisterPlayerEvent(6, Team_Flag_Holder_reset)
-RegisterPlayerEvent(8, Team_Flag_Holder_reset)
 
 local function Proccess()
 
@@ -389,8 +387,10 @@ end
 		print("*       Team Flag timers on       *")
 			if(wil_o_whisp == 1)then
 				print("*      Wil - o - Whisp active     *") 
+				print("******* Location Randomized *******")
 			else
 				print("*      Wil - o - Whisp -idle-     *")
+				print("******** Location Standard ********")
 			end
 		print("*       World Flag timer on       *")
 	 	print("** Capture The Flag System ready **") 
