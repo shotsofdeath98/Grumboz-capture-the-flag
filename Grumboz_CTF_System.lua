@@ -387,10 +387,10 @@ end
 		print("*       Team Flag timers on       *")
 			if(wil_o_whisp == 1)then
 				print("*      Wil - o - Whisp active     *") 
-				print("******* Location Randomized *******")
+				print("*       Location Randomized       *")
 			else
 				print("*      Wil - o - Whisp -idle-     *")
-				print("******** Location Standard ********")
+				print("*        Standard Location        *")
 			end
 		print("*       World Flag timer on       *")
 	 	print("** Capture The Flag System ready **") 
