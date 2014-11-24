@@ -204,8 +204,6 @@ math.randomseed(GetGameTime()*GetGameTime())
 		if(map)then
 			World_CTF.FLAG[3] = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
 			print("CTF_FLAG_LOC", loc)
-		else
-			print("CTF_W_FLAG_SPAWN_ERR")
 		end
 end
 
