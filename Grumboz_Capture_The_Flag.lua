@@ -341,7 +341,7 @@ local function Player_Change_Zone(event, player, newZone, newArea)
 	end
 end
 
-RegisterPlayerEvent(27, Player_Change_Zone)
+RegisterPlayerEvent(28, Player_Change_Zone)
 
 local function Proccess()
 
