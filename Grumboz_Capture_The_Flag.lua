@@ -32,7 +32,7 @@ local CTF_Player_Check = 10000; -- in ms. :: when not minimum players this timer
 local CTF_round_timer = 1800000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 local CTF_spawn_timer = 600000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
-local World_flag_loc = {
+local World_flag_loc = { -- {map, x, y, z, o, "zone name"}
 			[1] = {0, -13205.777344, 271.682526, 21.857664, 4.288268, "Gurubashi Arena"}, -- [PRIMARY]
 			[2] = {0, -1843.465942, -2833.777344, 62.733418, 0.368639, "Arathi Highlands"}, -- [SECONDARY]
 			[3] = {1, -3199.992432, -3101.671387, 35.121338, 3.830751, "Dustwallow Marsh"}, -- [SECONDARY]
