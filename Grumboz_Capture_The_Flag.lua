@@ -32,18 +32,18 @@ local CTF_round_timer = 1800000; -- in ms. :: Default = 1800000 :: 300000 = 5 mi
 local CTF_spawn_timer = 600000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
 
 local World_flag_loc = {
-			[1] = {0, -13327.975586, -342.763367, 14.706733, 2.067787}, -- [PRIMARY] flag location Crystalein cave
-			[2] = {530, -1863.494751, 5430.419434, -7.748078, 2.067787}, -- central flag location Shattrath
-			[3] = {0, -7303.852539, -1063.009888, 277.069305, 6.033762}, -- central flag location BlackRock Mountain
-			[4] = {1, -1030.969238, 1790.895264, 65.066193, 5.895199}, -- central flag location Desolace
-			[5] = {1, -6611.236328, -1429.580200, -268.325745, 3.924639}, -- central flag location Lakkari Tar Pits
-			[6] = {1, -3032.970947, -3087.337646, 66.752686, 5.794240}, -- central flag location Dustwallow Marsh
-			[7] = {530, -424.795105, 1661.167969, 57.115944, 0.642495}, -- central flag location The Legion Front
-			[8] = {530, -722.230864, 5513.937012, 23.676741, 0.961376}, -- central flag location ZangarMarsh
-			[9] = {530, 3523.850586, 2934.691406, 137.001068, 3.845476}, -- central flag location Eco-Dome Midrealm
-			[10] = {571, 2649.121826, 317.876343, 93.201843, 6.254735}, -- central flag location The Frozen Sea
-			[11] = {571, 6149.879395, 5117.969727, -97.113358, 2.221082}, -- central flag location MistWhisper Refuge
-			[12] = {1, -3965.707275, -2578.417969, 229.510910, 5.87359}, -- central flag location Dustwallow Marsh
+			[1] = {0, -13205.777344, 271.682526, 21.857664, 4.288268, "Gurubashi Arena"}, -- [PRIMARY]
+			[2] = {0, -1843.465942, -2833.777344, 62.733418, 0.368639, "Arathi Highlands"}, -- [SECONDARY]
+			[3] = {1, -3199.992432, -3101.671387, 35.121338, 3.830751, "Dustwallow Marsh"}, -- [SECONDARY]
+			[4] = {530, 51.016739, 2179.303955, 128.033310, 3.198974, "HellFire Peninsula"}, -- [SECONDARY]
+			[5] = {530, 3057.451660, 3667.751221, 142.426727, 0.075582, "NetherStorm"}, -- [SECONDARY]
+			[6] = {530, -1686.455322, 7564.386719, -2.526253, 0.809005, "Nagrand"}, -- [SECONDARY]
+			[7] = {530, -3782.885742, 2334.667480, 108.732391, 0.054136, "ShadowMoon Valley"}, -- [SECONDARY]
+			[8] = {530, 253.291656, 5811.962891, 20.156981, 3.890898, "ZangarMarsh"}, -- [SECONDARY]
+			[9] = {571, 2808.075928, 5153.456543, 73.271805, 1.072611, "Boran Tundra"}, -- [SECONDARY]
+			[10] = {571, 2531.451416, 1224.365845, 2.942016, 4.994154, "The Frozen Sea"}, -- [SECONDARY]
+			[11] = {571, 8558.536133, 2651.354736, 652.353455, 2.785842, "IceCrown"}, -- [SECONDARY]
+			[12] = {571, 6040.804199, -3712.343018, 371.988068, 2.338269, "Zul Drak"}, -- [SECONDARY]
 						};
 						
 -- DON'T Edit ANYTHING Below here UNLESS you REALLY know what your doing --
@@ -200,12 +200,12 @@ math.randomseed(GetGameTime()*GetGameTime())
 			loc = 1
 		end
 	
-	local map, x, y, z, o = table.unpack(World_flag_loc[loc])
+	local map, x, y, z, o, name = table.unpack(World_flag_loc[loc])
 	local flag = (flag_id + 1) + World_CTF.team
 	
 		if(map)then
 			World_CTF.FLAG[3] = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
-			print("CTF_FLAG_LOC", loc)
+			print("CTF_FLAG_LOC", loc, name)
 		end
 end
 
