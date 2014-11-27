@@ -317,6 +317,21 @@ RegisterPlayerEvent(4, Return_Flag) -- logout
 RegisterPlayerEvent(6, Return_Flag) -- die by plr
 RegisterPlayerEvent(8, Return_Flag) -- die by npc
 
+local function PlayerMounts(eventid, player, spellid)
+
+	if(eventid == 5)then
+	
+		if(player:InBattleground() == false)then
+		
+			if((player:HasAura(23335))or(player:HasAura(23333)))then
+				 Return_Flag(event, player)
+			end
+		end
+	end
+end
+
+RegisterPlayerEvent(5, PlayerMounts)
+
 local function Player_Change_Zone(event, player, newZone, newArea)
 
 	if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
