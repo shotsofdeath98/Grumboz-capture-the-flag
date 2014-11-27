@@ -9,7 +9,7 @@
 -- with wil-o-whisp off. the world flag will spawn at 1 location.
 -- your players job is to get there team flag to the world flag and tag it.
 
-print("\n *********************************")
+print("\n ***************©*****************")
 print("******* Grumbo'z CTF System *******")
 print("* Capture The Flag System Loading *")
 
