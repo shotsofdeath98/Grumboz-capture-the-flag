@@ -26,6 +26,7 @@ print("* Capture The Flag System Loading *")
 local CTF = 1; -- system operation switch. 0=system off/1=system on
 local wil_o_whisp = 1; -- default == 1/on(world flag random spawning on)
 local non_stop_action = 0; -- default 0 // 0=off/1=on
+local hint = 1; -- announce the zone the world flag spawned in 0=off/1=on
 local required_players = 4; -- minimum required players
 local CTF_Player_Check = 10000; -- in ms. :: when not minimum players this timer will check often for minimum players
 local CTF_round_timer = 1800000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
@@ -194,6 +195,11 @@ math.randomseed(GetGameTime()*GetGameTime())
 			loc = math.random(1, #World_flag_loc)
 			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.")
 			SendWorldMessage("Now it's time to FIND that World Flag for your team's honor.")
+			
+			if(hint == 1)then
+				SendWorldMessage("Located in "..World_flag_loc[loc][6].." zone.")
+			end
+			
 		else
 			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.")
 			SendWorldMessage("Now it's time to Fight and take that World Flag.")
