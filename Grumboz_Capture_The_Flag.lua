@@ -297,9 +297,9 @@ end
 RegisterPlayerEvent(3, clear_aura) -- login
 RegisterPlayerEvent(36, clear_aura) -- revive
 
-local function Return_Flag(event, a, b, c)
+local function Return_Flag(event, a, b)
 
-if(event == (6 or 8))then player = c else player = a; end
+if(event == (6 or 8))then player = b else player = a; end
 
 	if(player:InBattleground() == false)then
 
