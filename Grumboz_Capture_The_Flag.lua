@@ -209,18 +209,22 @@ math.randomseed(GetGameTime()*GetGameTime())
 		end
 end
 
+-- **********
+
 local function Spawn_Flags()
 
 	World_CTF.flag_allow = 1;
 	Spawn_Team_Flags(0)
 	Spawn_Team_Flags(1)
 	Spawn_World_Flag()
-	CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
+	
+		if(non_stop_action == 0)then 
+			CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
+		end
+		
 	print("CTF_ROUND_START")
 
 end
-
--- **********
 
 local function EndRound() 
 
@@ -232,6 +236,7 @@ RemoveAllAuras(1,1,1)
 	if(World_CTF.FLAG[1])then RemoveFlag(World_CTF.FLAG[1], 0); end
 	if(World_CTF.FLAG[2])then RemoveFlag(World_CTF.FLAG[2], 1); end
 	if(World_CTF.FLAG[3])then RemoveWorldFlag(World_CTF.FLAG[3], 3); end
+	if(non_stop_action == 1)then CreateLuaEvent(Spawn_Flags, 100, 1); end
 			
 print("CTF_ROUND_END")
 end	
@@ -244,10 +249,17 @@ local function Tag_Team_Flag(event, player, go)
 
 	local team_name = GetTeamName(player:GetTeam())
 
-	RemoveFlag(go, player:GetTeam())
-	SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
-	PlayerAddAura(player)
-	print("CTF_TAG_ATF")
+	if(go == World_CTF.FLAG[player:GetTeam()+1])then
+
+		RemoveFlag(go, player:GetTeam())
+		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
+		PlayerAddAura(player)
+		print("CTF_TAG_ATF")
+		
+	else
+		go:RemoveFromWorld()
+		player:SendBroadcastMessage("Ghost team flag Despawned.")
+	end
 end
 
 RegisterGameObjectGossipEvent(flag_id, 1, Tag_Team_Flag)
@@ -255,28 +267,33 @@ RegisterGameObjectGossipEvent(flag_id+1, 1, Tag_Team_Flag)
 
 local function Tag_World_Flag(event, player, go)
 
-
-	if(player:GetTeam() ~= (World_CTF.team - 1))then
-
-		local team_name = GetTeamName(player:GetTeam())
-		
-		if(World_CTF[team_name] == player:GetGUIDLow())then
+	if(go == World_CTF.FLAG[3])then
 	
-			if((player:HasAura(23335))or(player:HasAura(23333)))then
-				EndRound()
-				World_CTF.team = (player:GetTeam()+1)
-				SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
-				SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
-				print("CTF_TAG_WF")
+		if(player:GetTeam() ~= (World_CTF.team - 1))then
+	
+			local team_name = GetTeamName(player:GetTeam())
+			
+			if(World_CTF[team_name] == player:GetGUIDLow())then
+		
+				if((player:HasAura(23335))or(player:HasAura(23333)))then
+					EndRound()
+					World_CTF.team = (player:GetTeam()+1)
+					SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
+					SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
+					print("CTF_TAG_WF")
+				else
+					player:SendBroadcastMessage("You seem to have dropped the flag...")
+				end
 			else
-				player:SendBroadcastMessage("You seem to have dropped the flag...")
+				player:SendBroadcastMessage(World_CTF.Ann_conf[math.random(1, #World_CTF.Ann_conf)])
 			end
 		else
-			player:SendBroadcastMessage(World_CTF.Ann_conf[math.random(1, #World_CTF.Ann_conf)])
+			Spawn_Team_Flags(player:GetTeam())
+			player:SendBroadcastMessage(World_CTF.Ann_mad[math.random(1, #World_CTF.Ann_mad)])
 		end
 	else
-		Spawn_Team_Flags(player:GetTeam())
-		player:SendBroadcastMessage(World_CTF.Ann_mad[math.random(1, #World_CTF.Ann_mad)])
+		go:RemoveFromWorld()
+		player:SendBroadcastMessage("Ghost world flag Despawned.")
 	end
 end
 
@@ -349,6 +366,13 @@ local function Proccess()
 
 local pIw = #GetPlayersInWorld()
 
+	if(pIw)then
+		if(non_stop_action == 1)then
+			Spawn_Flags()
+		return false;
+		end
+	end
+	
 World_CTF.gear = (World_CTF.gear + 1)
 
 	if((World_CTF.service == 1)and(World_CTF.gear == 3))then  World_CTF.gear = 1; end
@@ -391,7 +415,9 @@ end
 				print("*      Wil - o - Whisp -idle-     *")
 				print("*        Standard Location        *")
 			end
-		print("*       World Flag timer on       *")
+
+			if((wil_o_whisp == 1)and(non_stop_action == 0))then	print("*       World Flag timer on       *"); end
+
 	 	print("** Capture The Flag System ready **") 
 		print(" *********************************\n")
 		Proccess()
