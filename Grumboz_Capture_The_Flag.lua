@@ -228,7 +228,7 @@ local function Spawn_Flags()
 			CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
 		end
 		
-	print("CTF_ROUND_START")
+--	print("CTF_ROUND_START")
 
 end
 
@@ -244,7 +244,7 @@ RemoveAllAuras(1,1,1)
 	if(World_CTF.FLAG[3])then RemoveWorldFlag(World_CTF.FLAG[3], 3); end
 	if(non_stop_action == 1)then CreateLuaEvent(Spawn_Flags, 100, 1); end
 			
-print("CTF_ROUND_END")
+-- print("CTF_ROUND_END")
 end	
 
 -- *****************
@@ -260,7 +260,7 @@ local function Tag_Team_Flag(event, player, go)
 		RemoveFlag(go, player:GetTeam())
 		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
 		PlayerAddAura(player)
-		print("CTF_TAG_ATF")
+--		print("CTF_TAG_ATF")
 		
 	else
 		go:RemoveFromWorld()
@@ -286,7 +286,7 @@ local function Tag_World_Flag(event, player, go)
 					World_CTF.team = (player:GetTeam()+1)
 					SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
 					SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
-					print("CTF_TAG_WF")
+--					print("CTF_TAG_WF")
 				else
 					player:SendBroadcastMessage("You seem to have dropped the flag...")
 				end
