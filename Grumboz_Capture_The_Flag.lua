@@ -303,7 +303,7 @@ if(event == (6 or 8))then player = b else player = a; end
 
 	if(player:InBattleground() == false)then
 
-		if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
+		if(player:GetGUIDLow() == (World_CTF.Alliance or World_CTF.Horde))then
 			ClearFlagHolder(player:GetTeam())
 			
 				if(World_CTF.flag_allow == 1)then
@@ -334,7 +334,7 @@ RegisterPlayerEvent(5, PlayerMounts)
 
 local function Player_Change_Zone(event, player, newZone, newArea)
 
-	if((player:GetGUIDLow() == World_CTF.Alliance)or(player:GetGUIDLow() == World_CTF.Horde))then
+	if(player:GetGUIDLow() == (World_CTF.Alliance or World_CTF.Horde))then
 
 		PlayerAddAura(player)
 	else
