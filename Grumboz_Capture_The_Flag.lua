@@ -343,6 +343,7 @@ local function PlayerMounts(eventid, player, spellid)
 		if(player:InBattleground() == false)then
 		
 			if((player:HasAura(23335))or(player:HasAura(23333)))then
+			else
 				 Return_Flag(event, player)
 			end
 		end
