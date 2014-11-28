@@ -16,6 +16,7 @@ print("* Capture The Flag System Loading *")
 -- CTF is the operational switch. system 1=on/0=off
 -- wil_o_whisp is for world single spawn point or multiple spawn points. 0 == one spawn point(#1) / 1 == multiple spawn points
 -- non_stop_action is to bypass the timers. rounds are until a player captures the flag and NO intermissions.
+-- hint will allow the system to announce what zone the world flag spawned in. 0 = off / 1 = the current defending team / 2 = both teams.
 -- required_players is minimum required players for system to start a round. default 4 players.
 -- CTF_round_timer is the duration of a round
 -- CTF_spawn_timer is the pause between rounds
@@ -26,7 +27,7 @@ print("* Capture The Flag System Loading *")
 local CTF = 1; -- system operation switch. 0=system off/1=system on
 local wil_o_whisp = 1; -- default == 1/on(world flag random spawning on)
 local non_stop_action = 0; -- default 0 // 0=off/1=on
-local hint = 1; -- announce the zone the world flag spawned in 0=off/1=on
+local hint = 0; -- announce the zone the world flag spawned in 0 = off / 1 = announce to holding team / 2 = announce to both teams
 local required_players = 4; -- minimum required players
 local CTF_Player_Check = 10000; -- in ms. :: when not minimum players this timer will check often for minimum players
 local CTF_round_timer = 1800000; -- in ms. :: Default = 1800000 :: 300000 = 5 minutes // 600000 = 10 minutes // 900000 = 15 minutes //  1800000 = 30 minutes
@@ -197,9 +198,21 @@ math.randomseed(GetGameTime()*GetGameTime())
 			SendWorldMessage("Now it's time to FIND that World Flag for your team's honor.")
 			
 			if(hint == 1)then
-				SendWorldMessage("Located in "..World_flag_loc[loc][6].." zone.")
+			
+				hPiW = GetPlayersInWorld()
+				
+					for _,v in ipairs(hPiW) do
+					
+						if((v:GetTeam()+1) == World_CTF.team)then
+							v:SendBroadcastMessage("Located in "..World_flag_loc[loc][6].." zone.")
+						end
+					end
 			end
 			
+			if(hint == 2)then
+				SendWorldMessage("Located in "..World_flag_loc[loc][6].." zone.")
+			end
+
 		else
 			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.")
 			SendWorldMessage("Now it's time to Fight and take that World Flag.")
