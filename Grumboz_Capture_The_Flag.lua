@@ -426,6 +426,7 @@ end
 		print("** Capture The Flag System idle. **")
 		print(" *********************************\n")
 	end
+
 	if(CTF == 1)then 
 		print("*       Team Flag timers on       *")
 			if(wil_o_whisp == 1)then
