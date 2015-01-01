@@ -46,16 +46,16 @@ local World_flag_loc = { -- {map, x, y, z, o, "zone name"}
 			[10] = {571, 2531.451416, 1224.365845, 2.942016, 4.994154, "The Frozen Sea"}, -- [SECONDARY]
 			[11] = {571, 8558.536133, 2651.354736, 652.353455, 2.785842, "IceCrown"}, -- [SECONDARY]
 			[12] = {571, 6040.804199, -3712.343018, 371.988068, 2.338269, "Zul Drak"}, -- [SECONDARY]
-						};
+	};
 						
 -- DON'T Edit ANYTHING Below here UNLESS you REALLY know what your doing --
 
 local flag_id = 600000;
 
 local team_flag_loc = {
-			[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
-			[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
-						};
+		[1] = {flag_id, 0, -4857.419434, -1032.148804, 502.190125, 5.370824}, -- ally King's Hall
+		[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
+	};
 
 local World_CTF = { 
 		Alliance = nil,
@@ -67,32 +67,32 @@ local World_CTF = {
 			[1] = "Alliance",
 			[2] = "Horde",
 			[3] = "Realm",
-					},
+		},
 		gear = 0,
 		service = 0,
 		flag_allow = 0,
 		Aura = { -- flag holder auras from wsg.
 		[1] = 23335,
 		[2] = 23333,
-				},
+		},
 		FLAG = {
 				[1] = nil,
 				[2] = nil,
 				[3] = nil,
-					},
+		},
 		Ann_mad = {
 				[1] = "That Tickles",
 				[2] = "!! STOP THAT !!",
 				[3] = "He hehe he",
 				[4] = "!! STOP Poking ME !!",
 				[5] = "hehe your funny..",
-					},
+		},
 		Ann_conf = {
 				[1] = "? Huh .. What ..?",
 				[2] = "Stop bothering me..",
 				[3] = "!! I was trying to sleep.!!",
-					},
-			};
+		},
+};
 
 local function GetTeamName(team_id)
 
