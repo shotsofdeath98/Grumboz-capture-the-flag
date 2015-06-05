@@ -57,7 +57,7 @@ local team_flag_loc = {
 		[2] = {flag_id+1, 1, 1920.868042, -4142.223633, 40.614372, 4.802613}, -- horde King's Hall
 	};
 
-local World_CTF = { 
+World_CTF = { 
 		Alliance = nil,
 		Horde = nil,
 		World = nil,
@@ -95,10 +95,11 @@ local World_CTF = {
 };
 
 local function GetTeamName(team_id)
-
-	local team = team_id+1
-	return World_CTF.team_name[team];
-
+	
+	if(team_id)then
+		local team = team_id+1
+		return World_CTF.team_name[team];
+	end
 end
 
 local function RemovePlayerAura(player)
@@ -109,7 +110,7 @@ end
 
 local function RemoveAllAuras(event, duration, cycle)
 
-local pIw = GetPlayersInWorld()
+local pIw = GetPlayersInWorld();
 
 	if(pIw)then
 
@@ -117,7 +118,7 @@ local pIw = GetPlayersInWorld()
 	
 			if(v:InBattleground() == false)then
 	
-				RemovePlayerAura(v)
+				RemovePlayerAura(v);
 	
 			end
 		end
@@ -126,19 +127,19 @@ end
 
 local function ClearFlagHolder(team_id)
 
-local team = team_id+1
+local team = team_id+1;
 
 	if(team)then
-		local team_name = GetTeamName(team)
-		World_CTF[team_name] = nil
+		local team_name = GetTeamName(team);
+		World_CTF[team_name] = nil;
 	end
 end
 
 local function SetFlagHolder(guid, team)
 
 	if(team)then
-		local team_name = GetTeamName(team)
-		World_CTF[team_name] = guid
+		local team_name = GetTeamName(team);
+		World_CTF[team_name] = guid;
 	end
 end
 
@@ -146,8 +147,8 @@ local function RemoveFlag(go, team_id)
 
 	if((go)and(go:RemoveFromWorld()))then
 
-		local team = team_id + 1
-		go:RemoveFromWorld()
+		local team = team_id + 1;
+		go:RemoveFromWorld();
 		World_CTF.FLAG[team] = nil;
 	end
 end
@@ -156,16 +157,16 @@ local function RemoveWorldFlag(go, team_id)
 
 	if((go)and(go:RemoveFromWorld()))then
 
-		local team = team_id
-		go:RemoveFromWorld()
+		local team = team_id;
+		go:RemoveFromWorld();
 		World_CTF.FLAG[team] = nil;
 	end
 end
 
 local function PlayerAddAura(player)
 
-	local aura = World_CTF.Aura[player:GetTeam()+1]
-	player:AddAura(aura, player)
+	local aura = World_CTF.Aura[player:GetTeam()+1];
+	player:AddAura(aura, player);
 
 end
 
@@ -175,14 +176,14 @@ end
 
 local function Spawn_Team_Flags(team_id)
 
-local team = team_id+1
+local team = team_id+1;
 
-	local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team])
+	local flag_id, map, x, y, z, o = table.unpack(team_flag_loc[team]);
 
 	if(flag_id)then
-		World_CTF.FLAG[team] = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o)
+		World_CTF.FLAG[team] = PerformIngameSpawn(2, flag_id, map, 0, x, y, z, o);
 	else
-		print("CTF_"..World_CTF.team_name[team].."_FLAG_SPAWN_ERR")
+		print("CTF_"..World_CTF.team_name[team].."_FLAG_SPAWN_ERR");
 	end
 end
 
@@ -193,38 +194,38 @@ math.randomseed(GetGameTime()*GetGameTime())
 	local loc = 0
 	
 		if(wil_o_whisp > 0)then
-			loc = math.random(1, #World_flag_loc)
-			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.")
-			SendWorldMessage("Now it's time to FIND that World Flag for your team's honor.")
+			loc = math.random(1, #World_flag_loc);
+			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been placed some where.");
+			SendWorldMessage("Now it's time to FIND that World Flag for your team's honor.");
 			
 			if(hint == 1)then
 			
-				hPiW = GetPlayersInWorld()
+				hPiW = GetPlayersInWorld();
 				
 					for _,v in ipairs(hPiW) do
 					
 						if((v:GetTeam()+1) == World_CTF.team)then
-							v:SendBroadcastMessage("Located in "..World_flag_loc[loc][6].." zone.")
+							v:SendBroadcastMessage("Located in "..World_flag_loc[loc][6].." zone.");
 						end
 					end
 			end
 			
 			if(hint == 2)then
-				SendWorldMessage("Located in "..World_flag_loc[loc][6].." zone.")
+				SendWorldMessage("Located in "..World_flag_loc[loc][6].." zone.");
 			end
 
 		else
-			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.")
-			SendWorldMessage("Now it's time to Fight and take that World Flag.")
+			SendWorldMessage("The "..World_CTF.team_name[World_CTF.team].."'s World Flag has been spawned.");
+			SendWorldMessage("Now it's time to Fight and take that World Flag.");
 			loc = 1
 		end
 	
 	local map, x, y, z, o, name = table.unpack(World_flag_loc[loc])
-	local flag = (flag_id + 1) + World_CTF.team
+	local flag = (flag_id + 1) + World_CTF.team;
 	
 		if(map)then
-			World_CTF.FLAG[3] = PerformIngameSpawn(2, flag, map, 0, x, y, z, o)
-			print("CTF_FLAG_LOC", loc, name)
+			World_CTF.FLAG[3] = PerformIngameSpawn(2, flag, map, 0, x, y, z, o);
+			print("CTF_FLAG_LOC", loc, name);
 		end
 end
 
@@ -233,12 +234,12 @@ end
 local function Spawn_Flags()
 
 	World_CTF.flag_allow = 1;
-	Spawn_Team_Flags(0)
-	Spawn_Team_Flags(1)
-	Spawn_World_Flag()
+	Spawn_Team_Flags(0);
+	Spawn_Team_Flags(1);
+	Spawn_World_Flag();
 	
 		if(non_stop_action == 0)then 
-			CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1)
+			CreateLuaEvent(RemoveAllAuras, ((World_CTF.Start + CTF_round_timer) - GetGameTime()), 1);
 		end
 		
 --	print("CTF_ROUND_START")
@@ -248,9 +249,9 @@ end
 local function EndRound() 
 
 World_CTF.flag_allow = 0;
-ClearFlagHolder(0)
-ClearFlagHolder(1)
-RemoveAllAuras(1,1,1)
+ClearFlagHolder(0);
+ClearFlagHolder(1);
+RemoveAllAuras(1,1,1);
 
 	if(World_CTF.FLAG[1])then RemoveFlag(World_CTF.FLAG[1], 0); end
 	if(World_CTF.FLAG[2])then RemoveFlag(World_CTF.FLAG[2], 1); end
@@ -266,18 +267,18 @@ end
 
 local function Tag_Team_Flag(event, player, go)
 
-	local team_name = GetTeamName(player:GetTeam())
+	local team_name = GetTeamName(player:GetTeam());
 
 	if(go == World_CTF.FLAG[player:GetTeam()+1])then
 
-		RemoveFlag(go, player:GetTeam())
-		SetFlagHolder(player:GetGUIDLow(), player:GetTeam())
-		PlayerAddAura(player)
+		RemoveFlag(go, player:GetTeam());
+		SetFlagHolder(player:GetGUIDLow(), player:GetTeam());
+		PlayerAddAura(player);
 --		print("CTF_TAG_ATF")
 		
 	else
-		go:RemoveFromWorld()
-		player:SendBroadcastMessage("Ghost team flag Despawned.")
+		go:RemoveFromWorld();
+		player:SendBroadcastMessage("Ghost team flag Despawned.");
 	end
 end
 
@@ -290,29 +291,29 @@ local function Tag_World_Flag(event, player, go)
 	
 		if(player:GetTeam() ~= (World_CTF.team - 1))then
 	
-			local team_name = GetTeamName(player:GetTeam())
+			local team_name = GetTeamName(player:GetTeam());
 			
 			if(World_CTF[team_name] == player:GetGUIDLow())then
 		
 				if((player:HasAura(23335))or(player:HasAura(23333)))then
-					EndRound()
-					World_CTF.team = (player:GetTeam()+1)
-					SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.")
-					SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!")
---					print("CTF_TAG_WF")
+					EndRound();
+					World_CTF.team = (player:GetTeam()+1);
+					SendWorldMessage("The "..World_CTF.team_name[player:GetTeam()+1].." has Captured The World Flag.");
+					SendWorldMessage("!! NOW, kneel before the  power of the "..World_CTF.team_name[player:GetTeam()+1].." !!");
+--					print("CTF_TAG_WF");
 				else
-					player:SendBroadcastMessage("You seem to have dropped the flag...")
+					player:SendBroadcastMessage("You seem to have dropped the flag...");
 				end
 			else
-				player:SendBroadcastMessage(World_CTF.Ann_conf[math.random(1, #World_CTF.Ann_conf)])
+				player:SendBroadcastMessage(World_CTF.Ann_conf[math.random(1, #World_CTF.Ann_conf)]);
 			end
 		else
-			Spawn_Team_Flags(player:GetTeam())
-			player:SendBroadcastMessage(World_CTF.Ann_mad[math.random(1, #World_CTF.Ann_mad)])
+			Spawn_Team_Flags(player:GetTeam());
+			player:SendBroadcastMessage(World_CTF.Ann_mad[math.random(1, #World_CTF.Ann_mad)]);
 		end
 	else
-		go:RemoveFromWorld()
-		player:SendBroadcastMessage("Ghost world flag Despawned.")
+		go:RemoveFromWorld();
+		player:SendBroadcastMessage("Ghost world flag Despawned.");
 	end
 end
 
@@ -328,7 +329,7 @@ local function clear_aura(event, player)
 
 	if(player:InBattleground() == false)then
 
-		RemovePlayerAura(player)
+		RemovePlayerAura(player);
 	end
 end
 
@@ -342,10 +343,10 @@ if(event == (6 or 8))then player = b else player = a; end
 	if(player:InBattleground() == false)then
 
 		if(player:GetGUIDLow() == (World_CTF.Alliance or World_CTF.Horde))then
-			ClearFlagHolder(player:GetTeam())
+			ClearFlagHolder(player:GetTeam());
 			
 				if(World_CTF.flag_allow == 1)then
-					Spawn_Team_Flags(player:GetTeam())
+					Spawn_Team_Flags(player:GetTeam());
 				end
 		end
 	end
@@ -363,7 +364,7 @@ local function PlayerMounts(eventid, player, spellid)
 		
 			if((player:HasAura(23335))or(player:HasAura(23333)))then
 			else
-				 Return_Flag(event, player)
+				 Return_Flag(event, player);
 			end
 		end
 	end
@@ -375,7 +376,7 @@ local function Player_Change_Zone(event, player, newZone, newArea)
 
 	if(player:GetGUIDLow() == (World_CTF.Alliance or World_CTF.Horde))then
 
-		PlayerAddAura(player)
+		PlayerAddAura(player);
 	else
 	end
 end
@@ -384,37 +385,37 @@ RegisterPlayerEvent(27, Player_Change_Zone)
 
 local function Proccess()
 
-local pIw = #GetPlayersInWorld()
+local pIw = #GetPlayersInWorld();
 
 	if(pIw)then
 		if(non_stop_action == 1)then
-			Spawn_Flags()
+			Spawn_Flags();
 		return false;
 		end
 	end
 	
-World_CTF.gear = (World_CTF.gear + 1)
+World_CTF.gear = (World_CTF.gear + 1);
 
 	if((World_CTF.service == 1)and(World_CTF.gear == 3))then  World_CTF.gear = 1; end
 
 	if(World_CTF.gear == 3)then
-		SendWorldMessage("Grumboz Capture the Flag has ended for this round.")
-		EndRound()
-		CreateLuaEvent(Proccess, CTF_spawn_timer, 1)
+		SendWorldMessage("Grumboz Capture the Flag has ended for this round.");
+		EndRound();
+		CreateLuaEvent(Proccess, CTF_spawn_timer, 1);
 		World_CTF.gear = 0;
 	end
 
 	if(World_CTF.gear == 1)then
 	
-		World_CTF.Start = GetGameTime()
+		World_CTF.Start = GetGameTime();
 
 			if(pIw >= required_players)then
 				World_CTF.service = 0;
-				Spawn_Flags()
-				CreateLuaEvent(Proccess, CTF_round_timer, 1)
+				Spawn_Flags();
+				CreateLuaEvent(Proccess, CTF_round_timer, 1);
 			else
 				if(World_CTF.service == 0)then print("CTF_ROUND_PAUSE_REQUIRE_PLAYERS_"..pIw.."_OF_"..required_players); end
-				CreateLuaEvent(Proccess, CTF_Player_Check, 1)
+				CreateLuaEvent(Proccess, CTF_Player_Check, 1);
 				World_CTF.service = 1;
 			end
 		
@@ -423,23 +424,23 @@ World_CTF.gear = (World_CTF.gear + 1)
 end
 
 	if(CTF == 0)then
-		print("** Capture The Flag System idle. **")
-		print(" *********************************\n")
+		print("** Capture The Flag System idle. **");
+		print(" *********************************\n");
 	end
 
 	if(CTF == 1)then 
-		print("*       Team Flag timers on       *")
+		print("*       Team Flag timers on       *");
 			if(wil_o_whisp == 1)then
-				print("*      Wil - o - Whisp active     *") 
-				print("*       Location Randomized       *")
+				print("*      Wil - o - Whisp active     *");
+				print("*       Location Randomized       *");
 			else
-				print("*      Wil - o - Whisp -idle-     *")
-				print("*        Standard Location        *")
+				print("*      Wil - o - Whisp -idle-     *");
+				print("*        Standard Location        *");
 			end
 
 			if((wil_o_whisp == 1)and(non_stop_action == 0))then	print("*       World Flag timer on       *"); end
 
-	 	print("** Capture The Flag System ready **") 
-		print(" *********************************\n")
-		Proccess()
+	 	print("** Capture The Flag System ready **");
+		print(" *********************************\n");
+		Proccess();
 	 end
