@@ -9,9 +9,9 @@
 -- with wil-o-whisp off. the world flag will spawn at 1 location.
 -- your players job is to get there team flag to the world flag and tag it.
 
-print("\n ***************©*****************")
-print("******* Grumbo'z CTF System *******")
-print("* Capture The Flag System Loading *")
+print("\n ***************©*****************");
+print("******* Grumbo'z CTF System *******");
+print("* Capture The Flag System Loading *");
 
 -- CTF is the operational switch. system 1=on/0=off
 -- wil_o_whisp is for world single spawn point or multiple spawn points. 0 == one spawn point(#1) / 1 == multiple spawn points
